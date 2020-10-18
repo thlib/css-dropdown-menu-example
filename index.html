@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TH - CSS Only Multilevel Dropdown</title>
+<style type="text/css">
+/***reset default styling***/
+.nav,
+.nav ul{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+.nav a {
+    text-decoration:none;
+}
+/*CUSTOMIZATION*/
+/*i have split the code to have the width/height/color separate from the rest of the code*/
+/*COLORS*/
+/*here are some default colors, funky colors used for distinctive visibility*/
+/*i hope that you can handle colors customization on your own :p*/
+.nav {
+    background:yellow;
+}
+.nav a {
+    background:#9C3;
+    color:#000;
+}
+.nav ul {
+    background:red; /*top link persistent background color*/
+}
+.nav a.main {
+    background:transparent; /*so that the top link persistent background works*/
+}
+.nav ul a.main {
+    background:yellow;
+}
+.nav a.main:hover {
+    background:orange;
+}
+.nav .sub ul a {
+    background:#CC6;
+}
+.nav .sub ul a.main {
+    background:yellow;
+}
+.nav .sub ul a.main:hover {
+    background:orange;
+}
+.nav a:hover,
+.nav a:focus,
+.nav a:active{
+    background:orange;
+}
+.nav .sub li a:hover,
+.nav .sub li a:focus,
+.nav .sub li a:active{
+    background:#C93;
+}
+
+/*WIDTH (!IMPORTANT)*/
+/*change each width value below, else the dropdown will stop working (:hover will still work in modern browsers because of the opera fix)*/
+/*set the link width here*/
+.nav .link,
+.nav a {
+    width:9em; /*same as width*/
+}
+.nav ul li {
+/*force ie8 to float-drop*/
+    max-width:9em; /*same as width*/
+}
+/*set the sublink left shift width here (same as width)*/
+.nav ul ul {
+/*move the sublinks to the side, so they dont overlap*/
+    left:9em; /*same as width*/
+}
+.nav li.reversed ul { /*reverse the direction of sublinks for the last dropdown*/
+    left:auto;
+    right:9em; /*same as width*/
+}
+/*add the negative value of "width - 1px" here (because css can't do math)*/
+/*or (width - 0.063em) where 0.063em is 1px on 16px base size*/
+.nav a {
+/*makes the links very thin, so that the sublinks can hide inside the main link*/
+/*!IMPORTANT: if you want a width of 9em, then you will have to change the value below to 8.937em (because: 9 - 0.063 = 8.973)*/
+    margin-right:-8.937em; /*make this width - 1px*//*or width - 0.063em (0.063 = 1px)*/
+}
+
+/*<customized width and positioning>*/
+/*ONE*/
+.nav .link.one {
+    margin-right:20px;
+}
+.nav .link.one,
+.nav .one a {
+    width:11em;
+}
+.nav .one ul li {
+    max-width:11em;
+}
+.nav .one ul ul {
+    left:11em;
+}
+.nav .one a {
+    margin-right:-10.937em; /*11 - 0.063 = 10.937em (0.063 = 1px)*/
+}
+/*TWO*/
+.nav .link.two {
+    margin-right:20px;
+}
+.nav .link.two,
+.nav .two a {
+    width:3em;
+}
+.nav .two ul li {
+    max-width:3em;
+}
+.nav .two ul ul {
+    left:3em;
+}
+.nav .two a {
+    margin-right:-2.937em; /*3 - 0.063 = 2.937em (0.063 = 1px)*/
+}
+/*THREE*/
+.nav .link.three {
+    margin-right:2px;
+}
+.nav .link.three,
+.nav .three a {
+    width:9em;
+}
+.nav .three ul li {
+    max-width:9em;
+}
+.nav li.reversed.three ul { /*this is because its reversed*/
+    right:9em; /*same as width*/
+}
+.nav .three a {
+    margin-right:-8.937em;
+}
+/*</customized width and positioning>*/
+
+
+
+
+
+
+
+
+/*HEIGHT*/
+.nav {
+    height:1.563em; /*you could remove this and clear the float differently, but to me this makes the most sense*/
+}
+.nav a {
+    padding:.2em 0; /*apply padding to links, to vertically center them, be careful with horizontal padding in IE5, correct width must be maintained*/
+}
+.nav a.main {
+    height:1.563em; /*needs to be the same as the persistent background trick and so that the sublevels are properly aligned*/
+    line-height:1.563em; /*not really necessary, but in this specific case it vertically centers the main link text*/
+    overflow:hidden; /*making it more bulletproof*/
+    padding:0; /*remove the padding that was applied above*/
+}
+.nav ul {
+    padding-top:1.563em; /*persistent background trick*/
+    margin-top:-1.563em; /*persistent background trick*/
+}
+.nav ul ul {
+    position:relative; /*so that it can be moved top/left*/
+    top:-1.563em; /*this is the sole reason why the main links must have a fixed height*/
+}
+
+
+/*Dropper Dropdown*/
+/*supports up to 4 sub-levels in IE5-7, more can be added*/
+/*modern browsers already support any amount of sublevels*/
+/*made by Timo Huovinen*/
+
+.nav li {
+    float:left; /*fixes several IE related bugs, and allows for clearing*/
+}
+.nav ul {
+    float:left; /*necessary for float drop*/
+}
+.nav ul li {
+    clear:left; /*must clear the floated list item inside sublist*/
+}
+.nav a {
+    position:relative; /*needs to have a position, to be above the rest*/
+    display:block;
+}
+.nav a.main {
+    float:left; /*necessary for float drop*/
+    margin-top:10000px; /*bring the links back into view*/
+}
+.nav .link,
+.nav .sub {
+    margin-top:-10000px; /*hide the links and their containers, opera has low upper limits*/
+}
+.nav ul {
+    margin-bottom:-5000px; /*avoid any interaction between the sub's, can be any large size*/
+}
+/*the main trick, removes the negative right-margin and causes float drop*/
+.nav a:hover,
+.nav a:focus,
+.nav a:active{
+    margin-right:0;
+}
+
+/*OPERA fix*/
+.nav ul:hover {
+    clear:left; /*fix for opera sublinks flickering on :hover*/
+}
+/*background no longer needed*/
+.nav ul ul {
+    background:transparent;
+}
+
+
+/*IE5-6 + 7 bug fixes*/
+.nav .sub {
+    width:100%;
+}
+/*empty rule to fix occassional IE6 tabbing bug, one of the weirdest bug's i have seen.
+it seems that this indexes the links together as one? does not happen for everyone, but im leaving it just in case.*/
+a, a:hover, a:active, a:focus {}
+</style>
+<!--I would also suggest adding some javascript to delay the closing of the sublinks, just to make it even better-->
+</head>
+<body>
+<a href="#background1">background 1</a>
+<ul class="nav">
+<li class="link one">
+    <a class="main" href="#">Main</a>
+    <ul>
+        <li><a href="#1">test1</a></li>
+        <li><a href="#2">test2</a></li>
+        <li class="sub"><a class="main" href="#3">main 1 »</a>
+                    <ul>
+                        <li><a href="#subtest1">sub test 1</a></li>
+                        <li><a href="#subtest2">sub test 2</a></li>
+                        <li><a href="#subtest3">sub test 3</a></li>
+                        <li><a href="#subtest4">sub test 4</a></li>
+                        <li><a href="#subtest5">sub test 5</a></li>
+                        <li><a href="#subtest6">sub test 6</a></li>
+                    </ul>
+        </li>
+        <li class="sub"><a class="main" href="#4">main 2 »</a>
+                    <ul>
+                        <li><a href="#subtest1">sub test 1</a></li>
+                        <li><a href="#subtest2">sub test 2</a></li>
+                        <li><a href="#subtest3">sub test 3</a></li>
+                        <li><a href="#subtest4">sub test 4</a></li>
+                        <li><a href="#subtest5">sub test 5</a></li>
+                        <li><a href="#subtest6">sub test 6</a></li>
+                    </ul>
+        </li>
+        <li><a href="#5">test5</a></li>
+        <li><a href="#6">test6</a></li>
+        <li><a href="#7">long text link showing what happens</a></li>
+        <li><a href="#8">test8</a></li>
+        <li class="sub"><a class="main" href="#9">Everything is possible</a>
+                    <ul>
+                        <li><a href="#subtest1">sub test 1</a></li>
+                        <li><a href="#subtest2">sub test 2</a></li>
+                        <li><a href="#subtest3">sub test 3</a></li>
+                        <li><a href="#subtest5">sub test 5</a></li>
+                        <li><a href="#subtest6">sub test 6</a></li>
+                    </ul>
+        </li>
+    </ul>
+</li>
+<li class="link two">
+    <a class="main" href="#">Main</a>
+    <ul>
+        <li><a href="#1">test1</a></li>
+        <li><a href="#2">test2</a></li>
+        <li><a href="#3">test3</a></li>
+        <li><a href="#4">test4</a></li>
+        <li><a href="#5">test5</a></li>
+        <li><a href="#6">test6</a></li>
+        <li><a href="#7">test7</a></li>
+    </ul>
+</li>
+<li class="link reversed three">
+    <a class="main" href="#">Main</a>
+    <ul>
+        <li><a href="#1">test1</a></li>
+        <li><a href="#2">test2</a></li>
+        <li><a href="#3">test3</a></li>
+        <li class="sub"><a class="main" href="#4">test4 »</a>
+                    <ul>
+                        <li><a href="#subtest1">sub test 1</a></li>
+                        <li><a href="#subtest2">sub test 2</a></li>
+                        <li><a href="#subtest3">sub test 3</a></li>
+                        <li><a href="#subtest4">sub test 4</a></li>
+                        <li><a href="#subtest5">sub test 5</a></li>
+                        <li><a href="#subtest6">sub test 6</a></li>
+                    </ul>
+        </li>
+        <li><a href="#5">test5</a></li>
+        <li><a href="#6">test6</a></li>
+        <li class="sub"><a class="main" href="#7">test7 »</a>
+                    <ul>
+                        <li><a href="#subtest1">sub2 test 1</a></li>
+                        <li><a href="#subtest2">sub2 test 2</a></li>
+                        <li><a href="#subtest3">sub2 test 3</a></li>
+                        <li><a href="#subtest4">sub2 test 4</a></li>
+                        <li><a href="#subtest5">sub2 test 5</a></li>
+                        <li><a href="#subtest6">sub2 test 6</a></li>
+                    </ul>
+        </li>
+    </ul>
+</li>
+</ul>
+<a href="#background2">background 2</a>
+
+
+</body>
+</html>
